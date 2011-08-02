@@ -45,16 +45,6 @@ class CapyCapt < Sinatra::Base
     # Use Capybara driver to visit URL & render image
     begin
       browser = Capybara::Driver::Webkit::Browser.new
-
-      browser.instance_eval do
-        def connect
-          Capybara.timeout(30) do
-            attempt_connect
-            !@socket.nil?
-          end
-        end
-      end
-      
       browser.command('Visit', url)
       browser.command('Render', image_full_path, width, height)
     rescue Capybara::Driver::Webkit::WebkitError => e
