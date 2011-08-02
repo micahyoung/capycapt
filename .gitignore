@@ -1,3 +1,5 @@
 public/captures/*
 .rvmrc
 *.swp
+Vagrantfile
+.vagrant

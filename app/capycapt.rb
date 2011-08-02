@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
+require 'thin'
 require 'sinatra'
 
 require 'uri'
@@ -7,7 +8,10 @@ require 'digest/sha1'
 require 'capybara-webkit'
 
 class CapyCapt < Sinatra::Base
-	set :public, "public"
+	configure do
+		set :public, "public"
+		set :server, "thin"
+	end
 
 	get '/' do
 		# Params
@@ -42,5 +46,4 @@ class CapyCapt < Sinatra::Base
 			return false
 		end
 	end
-
 end
