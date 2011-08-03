@@ -1,4 +1,7 @@
 public/captures/*
+log/*
+tmp/*
+
 .rvmrc
 *.swp
 Vagrantfile
