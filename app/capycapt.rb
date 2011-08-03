@@ -13,7 +13,7 @@ class CapyCapt < Sinatra::Base
     set :public, "public"
     set :server, "thin"
 
-    # Exec Xvfb for capybara-webkit QT browser, if no X running
+    # Run Xvfb for capybara-webkit QT browser, if no X running
     xvfb_path = '/usr/bin/X11/Xvfb'
     xvfb_disp = ':1'
     xvfb_args = '-screen 0 1024x1024x24'
@@ -23,6 +23,9 @@ class CapyCapt < Sinatra::Base
       @pid = fork { exec( xvfb_cmd ) }
       at_exit { Process.kill("INT", @pid) }
     end
+
+    # Global browser instance 
+    $browser = Capybara::Driver::Webkit::Browser.new
   end
 
   get '/' do
@@ -34,7 +37,7 @@ class CapyCapt < Sinatra::Base
     return unless width  > 0 and width  < 1024
     return unless height > 0 and height < 1024
 
-    # Set image name based on URL/options hash
+    # Set image name based on hash of URL/options 
     url_hash = Digest::SHA1.hexdigest("#{url};#{width};#{height}")
     image_path = "captures/#{url_hash}.png"
     image_full_path = File.expand_path("public/#{image_path}")
@@ -44,14 +47,13 @@ class CapyCapt < Sinatra::Base
 
     # Use Capybara driver to visit URL & render image
     begin
-      browser = Capybara::Driver::Webkit::Browser.new
-      browser.command('Visit', url)
-      browser.command('Render', image_full_path, width, height)
+      $browser.command('Visit', url)
+      $browser.command('Render', image_full_path, width, height)
     rescue Capybara::Driver::Webkit::WebkitError => e
       return 'Capybara failed while rendering'
     end
 
-    # If file not created, add error, cleanup and return false
+    # Redirect to file if created, else return false
     if File.exists?(image_full_path)
       redirect image_path
     else
