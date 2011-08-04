@@ -1,10 +1,10 @@
 CapyCapt
 ========
-Simple web app for capturing live screenshots of another web site. Uses [Capybara-webkit's](https://github.com/thoughtbot/capybara-webkit) headless browser on [Sinatra](http://sinatrarb.com).
+Simple web app for capturing live screenshots of another web site. Uses [Capybara-webkit's](https://github.com/thoughtbot/capybara-webkit) headless browser running server-side and [Sinatra](http://sinatrarb.com) for basic request handling.
 
 Dependencies
 ------------
-All capybara-webkit's [dependencies](https://github.com/thoughtbot/capybara-webkit/blob/master/README.md) must be met. Does not run on Heroku.
+All capybara-webkit's [dependencies](https://github.com/thoughtbot/capybara-webkit/blob/master/README.md) must be met (ie. Xvfb and QT development libraries). Therefore, it must run on a full-featured server and _will not_ work on Heroku.
 
 Usage
 -----
@@ -15,7 +15,7 @@ Usage
 
 Example Installation
 --------------------
-* Platform: Ubuntu Server 11.04 (ex: ami-06ad526f)
+* Platform: Ubuntu Server 11.04 (ex: EC2 ami-06ad526f)
 * Install dependencies
 
 ```bash
