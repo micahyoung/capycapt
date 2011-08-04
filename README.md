@@ -22,6 +22,7 @@ Example Installation
 $ apt-get install ruby git
 $ apt-get install build-essential libqt4-dev libxml2-dev libxslt1-dev
 ```
+
 * Clone & test run
 
 ```bash
@@ -32,6 +33,7 @@ $ gem install bundler
 $ bundle install
 $ thin start
 ```
+
 * Deploy
 
 License
